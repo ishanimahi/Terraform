@@ -7,27 +7,28 @@ terraform {
     }
   }
   provider "aws" {
-    region = "ap-south-1"
+    region = "var.region"
 }
 resource "aws_instance" "instance1" {
-    ami           = "ami"
-    instance_type = "int-type"
-    availability_zone = "az"
+    ami           = "var.ami"
+    instance_type = "var.int_type"
+    availability_zone = "var.az"
+    key_pair = "var.key_pair"
   }
   resource "aws_security_group" "instance1sg"{
-    name = "instance1_security_ group"
+    name = "var.instance1sg"
     ingress {
-        description     = "HTTP from world"
-        from_port       = 80
-        to_port         = 80
+        description     = "var.tcp.description"
+        from_port       = "var.tcp_from_port"
+        to_port         = "var.tcp_to_port"
         protocol        = "tcp"
         cidr_blocks     = ["0.0.0.0/0"]        
     }
     ingress {
-        description     = "SSH  from world"
-        from_port       = 22
-        to_port         = 22
-        protocol        = "tcp"
+        description     = "var.ssh.description"
+        from_port       = "var.ssh_from_port"
+        to_port         = "var.ssh_to_port"
+        protocol        = "ssh"
         cidr_blocks     = ["0.0.0.0/0"]        
     }
       egress {
@@ -40,25 +41,25 @@ resource "aws_instance" "instance1" {
 }
 
 resource "aws_instance" "instance2" {
-    ami           = "ami"
-    instance_type = "int-type"
-    availability_zone = "az"
-}
+    ami           = "var.ami"
+    instance_type = "var.int_type"
+    availability_zone = "var.az"
+  }
   resource "aws_security_group" "instance2sg"{
-    description = "instance2_security_group"
+    description = "var.instance2sg"
     name = "instance2sg"
     ingress {
-        description     = "HTTP from world"
-        from_port       = 80
-        to_port         = 80
+        description     = "var.tcp.description"
+        from_port       = "var.tcp_from_port"
+        to_port         = "var.tcp_to_port"
         protocol        = "tcp"
         cidr_blocks     = ["0.0.0.0/0"]        
     }
     ingress {
-        description     = "SSH  from world"
-        from_port       = 22
-        to_port         = 22
-        protocol        = "tcp"
+        description     = "var.ssh.description"
+        from_port       = "var.ssh_from_port"
+        to_port         = "var.ssh_to_port"
+        protocol        = "ssh"
         cidr_blocks     = ["0.0.0.0/0"]        
     }
       egress {
