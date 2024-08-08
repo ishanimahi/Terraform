@@ -1,37 +1,43 @@
 terraform {
-    required_providers {
-      aws = {
-        source  = "hashicorp/aws"
-        version = "~> 5.0"
-      }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
     }
   }
-  provider "aws" {
-    region = "var.region"
 }
+
+provider "aws" {
+  region = var.region
+}
+
 resource "aws_instance" "instance1" {
-    ami           = "var.ami"
-    instance_type = "var.int_type"
-    availability_zone = "var.az"
-    key_pair = "var.key_pair"
+  ami               = var.ami
+  instance_type     = var.instance_type
+  availability_zone = var.az
+  key_name          = var.key_pair
+}
+
+resource "aws_security_group" "instance1sg" {
+  name = var.instance1sg
+  
+  ingress {
+    description = var.tcp_description
+    from_port   = var.tcp_from_port
+    to_port     = var.tcp_to_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-  resource "aws_security_group" "instance1sg"{
-    name = "var.instance1sg"
-    ingress {
-        description     = "var.tcp.description"
-        from_port       = "var.tcp_from_port"
-        to_port         = "var.tcp_to_port"
-        protocol        = "tcp"
-        cidr_blocks     = ["0.0.0.0/0"]        
-    }
-    ingress {
-        description     = "var.ssh.description"
-        from_port       = "var.ssh_from_port"
-        to_port         = "var.ssh_to_port"
-        protocol        = "ssh"
-        cidr_blocks     = ["0.0.0.0/0"]        
-    }
-      egress {
+  
+  ingress {
+    description = var.ssh_description
+    from_port   = var.ssh_from_port
+    to_port     = var.ssh_to_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
@@ -41,28 +47,31 @@ resource "aws_instance" "instance1" {
 }
 
 resource "aws_instance" "instance2" {
-    ami           = "var.ami"
-    instance_type = "var.int_type"
-    availability_zone = "var.az"
+  ami               = var.ami
+  instance_type     = var.instance_type
+  availability_zone = var.az
+}
+
+resource "aws_security_group" "instance2sg" {
+  name = var.instance2sg
+  
+  ingress {
+    description = var.tcp_description
+    from_port   = var.tcp_from_port
+    to_port     = var.tcp_to_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-  resource "aws_security_group" "instance2sg"{
-    description = "var.instance2sg"
-    name = "instance2sg"
-    ingress {
-        description     = "var.tcp.description"
-        from_port       = "var.tcp_from_port"
-        to_port         = "var.tcp_to_port"
-        protocol        = "tcp"
-        cidr_blocks     = ["0.0.0.0/0"]        
-    }
-    ingress {
-        description     = "var.ssh.description"
-        from_port       = "var.ssh_from_port"
-        to_port         = "var.ssh_to_port"
-        protocol        = "ssh"
-        cidr_blocks     = ["0.0.0.0/0"]        
-    }
-      egress {
+  
+  ingress {
+    description = var.ssh_description
+    from_port   = var.ssh_from_port
+    to_port     = var.ssh_to_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
