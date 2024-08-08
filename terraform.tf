@@ -5,7 +5,7 @@ variable "region" {
 
 variable "ami" {
   description = "AMI ID"
-  default     = "ami-12345678"
+  default     = "ami-0ad21ae1d0696ad58"
 }
 
 variable "instance_type" {
@@ -20,7 +20,7 @@ variable "az" {
 
 variable "key_pair" {
   description = "Key pair name"
-  default     = "my-key-pair"
+  default     = "terraform-project"
 }
 
 variable "instance1sg" {
