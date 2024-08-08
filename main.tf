@@ -16,6 +16,7 @@ resource "aws_instance" "instance1" {
   instance_type     = var.instance_type
   availability_zone = var.az
   key_name          = var.key_pair
+  vpc_security_group_ids = [aws_security_group.instance1sg.id]
 }
 
 resource "aws_security_group" "instance1sg" {
@@ -50,11 +51,13 @@ resource "aws_instance" "instance2" {
   ami               = var.ami
   instance_type     = var.instance_type
   availability_zone = var.az
+  key_name          = var.key_pair
+  vpc_security_group_ids = [aws_security_group.instance2sg.id]
 }
 
 resource "aws_security_group" "instance2sg" {
   name = var.instance2sg
-  
+    
   ingress {
     description = var.tcp_description
     from_port   = var.tcp_from_port
